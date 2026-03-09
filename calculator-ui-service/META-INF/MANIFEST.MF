@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Calculator UI Service
+Bundle-SymbolicName: calculator-ui-service
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: calculator.ui.service
+Bundle-RequiredExecutionEnvironment: JavaSE-21

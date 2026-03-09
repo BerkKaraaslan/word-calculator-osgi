@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Number Converter Service
+Bundle-SymbolicName: number-converter-service
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: number.converter.service
+Bundle-RequiredExecutionEnvironment: JavaSE-21

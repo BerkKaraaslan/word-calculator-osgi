@@ -1,0 +1,15 @@
+# mac
+.DS_Store
+
+# eclipse
+.metadata
+bin/
+tmp/
+*.log
+
+# build
+target/
+build/
+
+# osgi
+OSGI-INF/*.xml
