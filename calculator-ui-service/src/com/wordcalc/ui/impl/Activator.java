@@ -16,7 +16,7 @@ public class Activator implements BundleActivator {
     @Override
     public void start(BundleContext context) {
         System.out.println("calculator-ui-service started");
-
+        
         Locale appLocale = resolveApplicationLocale();
 
         SwingUtilities.invokeLater(() -> {
@@ -33,9 +33,9 @@ public class Activator implements BundleActivator {
     }
 
     private Locale resolveApplicationLocale() {
-        Locale systemLocale = Locale.getDefault();
-
-        if (systemLocale != null && "en".equalsIgnoreCase(systemLocale.getLanguage())) {
+    	String language = System.getProperty("user.language");
+    	
+        if ("en".equals(language)) {
             return Locale.ENGLISH;
         }
 
