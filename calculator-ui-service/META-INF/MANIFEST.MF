@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Calculator UI Service
 Bundle-SymbolicName: calculator-ui-service
 Bundle-Version: 1.0.0.qualifier
-Require-Bundle: org.eclipse.osgi;bundle-version="3.24.0"
+Require-Bundle: org.eclipse.osgi;bundle-version="3.24.0",
+ number-converter-service
 Bundle-Activator: com.wordcalc.ui.impl.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-21

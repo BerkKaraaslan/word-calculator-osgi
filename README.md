@@ -86,7 +86,6 @@ The following VM arguments are configured for the runtime:
 
 ***-Duser.country=US (optional)***
 
-
 These parameters configure:
 
 - SWT resource debugging
@@ -122,7 +121,6 @@ In the **Bundles** tab the following configuration must be applied.
 
 Launch with: Bundles selected below
 
-
 ## Selected Workspace Bundles
 
 Only the following **three bundles must be selected**:
@@ -133,18 +131,32 @@ Only the following **three bundles must be selected**:
 
 ***org.eclipse.osgi***
 
-
 These bundles appear under:
 
-Workspace
+Workspace  
 Target Platform
-
 
 ### Important
 
 Only these **three bundles** must be selected.
 
 All other bundles in the **Target Platform** must remain unselected.
+
+---
+
+# Bundle Start Level Configuration
+
+The bundle start levels are configured as follows:
+
+**number-converter-service**
+
+Start Level: **2**  
+Auto-Start: **true**
+
+**calculator-ui-service**
+
+Start Level: **4**  
+Auto-Start: **true**
 
 ---
 
@@ -159,7 +171,6 @@ The following options must be enabled:
 ***Add new workspace Bundles to this launch configuration automatically***
 
 ***Validate Bundles automatically prior to launching***
-
 
 These options allow Eclipse PDE to resolve required runtime dependencies automatically.
 
@@ -177,11 +188,10 @@ If you want to run the program in **English**, you must provide the following VM
 
 These arguments can be set in:
 
-Run Configurations
-→ OSGi Framework
-→ Arguments
+Run Configurations  
+→ OSGi Framework  
+→ Arguments  
 → VM Arguments
-
 
 ---
 

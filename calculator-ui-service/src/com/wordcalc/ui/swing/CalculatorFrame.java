@@ -13,6 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.wordcalc.converter.api.NumberWordConverterService;
+import com.wordcalc.converter.exception.ConversionException;
+import com.wordcalc.ui.action.CalculatorAction;
 import com.wordcalc.ui.i18n.UIMessages;
 
 public class CalculatorFrame extends JFrame {
@@ -20,6 +23,7 @@ public class CalculatorFrame extends JFrame {
     private static final long serialVersionUID = 1L;
 
     private final Locale locale;
+    private final CalculatorAction action;
 
     private JTextField firstNumberField;
     private JTextField secondNumberField;
@@ -30,9 +34,11 @@ public class CalculatorFrame extends JFrame {
     private JButton multiplyButton;
     private JButton divideButton;
 
-    public CalculatorFrame(Locale locale) {
+    public CalculatorFrame(Locale locale, NumberWordConverterService converterService) {
         this.locale = locale;
+        this.action = new CalculatorAction(converterService, locale);
         initialize();
+        registerActions();
     }
 
     private void initialize() {
@@ -112,6 +118,77 @@ public class CalculatorFrame extends JFrame {
         buttonPanel.add(divideButton);
 
         return buttonPanel;
+    }
+
+    private void registerActions() {
+
+        addButton.addActionListener(e -> performAdd());
+        subtractButton.addActionListener(e -> performSubtract());
+        multiplyButton.addActionListener(e -> performMultiply());
+        divideButton.addActionListener(e -> performDivide());
+    }
+
+    private void performAdd() {
+        executeCalculation(Operation.ADD);
+    }
+
+    private void performSubtract() {
+        executeCalculation(Operation.SUBTRACT);
+    }
+
+    private void performMultiply() {
+        executeCalculation(Operation.MULTIPLY);
+    }
+
+    private void performDivide() {
+        executeCalculation(Operation.DIVIDE);
+    }
+
+    private void executeCalculation(Operation operation) {
+
+        String first = firstNumberField.getText();
+        String second = secondNumberField.getText();
+
+        try {
+
+            String result;
+
+            switch (operation) {
+                case ADD:
+                    result = action.add(first, second);
+                    break;
+
+                case SUBTRACT:
+                    result = action.subtract(first, second);
+                    break;
+
+                case MULTIPLY:
+                    result = action.multiply(first, second);
+                    break;
+
+                case DIVIDE:
+                    result = action.divide(first, second);
+                    break;
+
+                default:
+                    return;
+            }
+
+            resultField.setText(result);
+
+        } catch (ConversionException ex) {
+
+            resultField.setText(
+                    UIMessages.get("error.conversion", locale) + ": " + ex.getMessage()
+            );
+        }
+    }
+
+    private enum Operation {
+        ADD,
+        SUBTRACT,
+        MULTIPLY,
+        DIVIDE
     }
 
     public JTextField getFirstNumberField() {

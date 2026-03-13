@@ -6,7 +6,9 @@ import javax.swing.SwingUtilities;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
+import com.wordcalc.converter.api.NumberWordConverterService;
 import com.wordcalc.ui.swing.CalculatorFrame;
 
 public class Activator implements BundleActivator {
@@ -16,25 +18,41 @@ public class Activator implements BundleActivator {
     @Override
     public void start(BundleContext context) {
         System.out.println("calculator-ui-service started");
-        
+
         Locale appLocale = resolveApplicationLocale();
+        System.out.println("Resolved Locale: " + appLocale);
+
+        NumberWordConverterService converterService = getConverterService(context);
 
         SwingUtilities.invokeLater(() -> {
-            calculatorFrame = new CalculatorFrame(appLocale);
+            calculatorFrame = new CalculatorFrame(appLocale, converterService);
             calculatorFrame.setVisible(true);
         });
     }
 
     @Override
     public void stop(BundleContext context) {
+        System.out.println("calculator-ui-service stopped");
+
         if (calculatorFrame != null) {
             SwingUtilities.invokeLater(() -> calculatorFrame.dispose());
         }
     }
 
+    private NumberWordConverterService getConverterService(BundleContext context) {
+        ServiceReference<NumberWordConverterService> reference =
+                context.getServiceReference(NumberWordConverterService.class);
+
+        if (reference == null) {
+            return null;
+        }
+
+        return context.getService(reference);
+    }
+
     private Locale resolveApplicationLocale() {
-    	String language = System.getProperty("user.language");
-    	
+        String language = System.getProperty("user.language");
+
         if ("en".equals(language)) {
             return Locale.ENGLISH;
         }
