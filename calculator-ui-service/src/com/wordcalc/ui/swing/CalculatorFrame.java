@@ -43,7 +43,7 @@ public class CalculatorFrame extends JFrame {
 
     private void initialize() {
         setTitle(UIMessages.get("window.title", locale));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(520, 240);
         setLocationRelativeTo(null);
         setResizable(false);
