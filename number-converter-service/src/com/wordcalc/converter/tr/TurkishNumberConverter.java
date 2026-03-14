@@ -25,12 +25,12 @@ public class TurkishNumberConverter {
 
     public int wordsToNumber(String text) throws ConversionException {
         if (text == null || text.isBlank()) {
-            throw new ConversionException("Input text cannot be null or blank.");
+            throw new ConversionException("error.inputNullOrBlank");
         }
 
         String normalized = normalize(text);
         if (normalized.isEmpty()) {
-            throw new ConversionException("Input text cannot be empty.");
+            throw new ConversionException("error.inputEmpty");
         }
 
         boolean negative = false;
@@ -38,7 +38,7 @@ public class TurkishNumberConverter {
             negative = true;
             normalized = normalized.substring((NEGATIVE + " ").length()).trim();
         } else if (normalized.equals(NEGATIVE)) {
-            throw new ConversionException("Invalid negative number expression.");
+            throw new ConversionException("error.invalidNegativeExpression");
         }
 
         if (ZERO.equals(normalized)) {
@@ -56,7 +56,7 @@ public class TurkishNumberConverter {
                 long scaleValue = getScaleValue(token);
 
                 if (scaleValue >= lastScale) {
-                    throw new ConversionException("Invalid scale order in Turkish number expression: " + text);
+                    throw new ConversionException("error.invalidScaleOrderTr", text);
                 }
 
                 int chunkValue;
@@ -65,7 +65,7 @@ public class TurkishNumberConverter {
                 } else {
                     chunkValue = parseChunk(currentChunkTokens);
                     if (chunkValue == 0) {
-                        throw new ConversionException("Invalid scale usage in Turkish number expression: " + text);
+                        throw new ConversionException("error.invalidScaleUsageTr", text);
                     }
                 }
 
@@ -158,7 +158,7 @@ public class TurkishNumberConverter {
             case THOUSAND -> 1_000L;
             case MILLION -> 1_000_000L;
             case BILLION -> 1_000_000_000L;
-            default -> throw new ConversionException("Unknown Turkish scale token: " + token);
+            default -> throw new ConversionException("error.unknownTurkishScaleToken", token);
         };
     }
 
@@ -206,12 +206,12 @@ public class TurkishNumberConverter {
                 value += unitValue;
                 index++;
             } else {
-                throw new ConversionException("Invalid Turkish number token: " + tokens.get(index));
+                throw new ConversionException("error.invalidTurkishNumberToken", tokens.get(index));
             }
         }
 
         if (index != tokens.size()) {
-            throw new ConversionException("Invalid Turkish chunk: " + String.join(" ", tokens));
+            throw new ConversionException("error.invalidTurkishChunk", String.join(" ", tokens));
         }
 
         return value;
@@ -275,7 +275,7 @@ public class TurkishNumberConverter {
 
     private void ensureIntRange(long value, String originalText) throws ConversionException {
         if (value < Integer.MIN_VALUE || value > Integer.MAX_VALUE) {
-            throw new ConversionException("Value is out of int range: " + originalText);
+            throw new ConversionException("error.valueOutOfRange", originalText);
         }
     }
 }

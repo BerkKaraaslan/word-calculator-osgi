@@ -17,11 +17,8 @@ public class Activator implements BundleActivator {
 
     @Override
     public void start(BundleContext context) {
-        System.out.println("calculator-ui-service started");
-
         Locale appLocale = resolveApplicationLocale();
-        System.out.println("Resolved Locale: " + appLocale);
-
+        
         NumberWordConverterService converterService = getConverterService(context);
 
         SwingUtilities.invokeLater(() -> {
@@ -32,8 +29,6 @@ public class Activator implements BundleActivator {
 
     @Override
     public void stop(BundleContext context) {
-        System.out.println("calculator-ui-service stopped");
-
         if (calculatorFrame != null) {
             SwingUtilities.invokeLater(() -> calculatorFrame.dispose());
         }

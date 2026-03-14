@@ -178,9 +178,10 @@ public class CalculatorFrame extends JFrame {
 
         } catch (ConversionException ex) {
 
-            resultField.setText(
-                    UIMessages.get("error.conversion", locale) + ": " + ex.getMessage()
-            );
+        	String localizedError =
+        	        UIMessages.get(ex.getMessageKey(), locale, ex.getArgs());
+
+        	resultField.setText(localizedError);
         }
     }
 

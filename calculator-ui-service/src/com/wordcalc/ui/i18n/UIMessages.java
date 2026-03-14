@@ -1,5 +1,6 @@
 package com.wordcalc.ui.i18n;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -17,6 +18,21 @@ public final class UIMessages {
         try {
             ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME, effectiveLocale);
             return bundle.getString(key);
+        } catch (MissingResourceException e) {
+            return key;
+        }
+    }
+    
+    public static String get(String key, Locale locale, Object... args) {
+        Locale effectiveLocale = resolveLocale(locale);
+
+        try {
+            ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME, effectiveLocale);
+            String pattern = bundle.getString(key);
+
+            MessageFormat format = new MessageFormat(pattern, effectiveLocale);
+            return format.format(args);
+
         } catch (MissingResourceException e) {
             return key;
         }

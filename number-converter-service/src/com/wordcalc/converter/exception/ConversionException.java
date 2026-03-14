@@ -4,11 +4,19 @@ public class ConversionException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
-    public ConversionException(String message) {
-        super(message);
+    private final String messageKey;
+    private final Object[] args;
+
+    public ConversionException(String messageKey, Object... args) {
+        this.messageKey = messageKey;
+        this.args = args;
     }
 
-    public ConversionException(String message, Throwable cause) {
-        super(message, cause);
+    public String getMessageKey() {
+        return messageKey;
+    }
+
+    public Object[] getArgs() {
+        return args;
     }
 }

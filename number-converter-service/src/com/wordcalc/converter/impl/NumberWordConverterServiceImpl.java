@@ -16,11 +16,11 @@ public class NumberWordConverterServiceImpl implements NumberWordConverterServic
     public int wordsToNumber(String text, Locale locale) throws ConversionException {
 
         if (locale == null) {
-            throw new ConversionException("Locale cannot be null.");
+            throw new ConversionException("error.localeNull");
         }
 
         if (text == null || text.isBlank()) {
-            throw new ConversionException("Input text cannot be null or empty.");
+            throw new ConversionException("error.inputNullOrEmpty");
         }
 
         String language = locale.getLanguage();
@@ -33,14 +33,14 @@ public class NumberWordConverterServiceImpl implements NumberWordConverterServic
             return englishConverter.wordsToNumber(text);
         }
 
-        throw new ConversionException("Unsupported locale: " + locale);
+        throw new ConversionException("error.unsupportedLocale", locale);
     }
 
     @Override
     public String numberToWords(int number, Locale locale) throws ConversionException {
 
         if (locale == null) {
-            throw new ConversionException("Locale cannot be null.");
+            throw new ConversionException("error.localeNull");
         }
 
         String language = locale.getLanguage();
@@ -53,6 +53,6 @@ public class NumberWordConverterServiceImpl implements NumberWordConverterServic
             return englishConverter.numberToWords(number);
         }
 
-        throw new ConversionException("Unsupported locale: " + locale);
+        throw new ConversionException("error.unsupportedLocale", locale);
     }
 }

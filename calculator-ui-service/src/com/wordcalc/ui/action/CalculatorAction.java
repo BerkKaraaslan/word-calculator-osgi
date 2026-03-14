@@ -51,7 +51,7 @@ public class CalculatorAction {
         int rightValue = converterService.wordsToNumber(right, locale);
 
         if (rightValue == 0) {
-            throw new ConversionException("Division by zero");
+            throw new ConversionException("error.divideByZero");
         }
 
         int result = leftValue / rightValue;

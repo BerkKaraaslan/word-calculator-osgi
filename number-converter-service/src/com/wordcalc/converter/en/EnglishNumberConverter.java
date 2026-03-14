@@ -31,12 +31,12 @@ public class EnglishNumberConverter {
 
     public int wordsToNumber(String text) throws ConversionException {
         if (text == null || text.isBlank()) {
-            throw new ConversionException("Input text cannot be null or blank.");
+            throw new ConversionException("error.inputNullOrBlank");
         }
 
         String normalized = normalize(text);
         if (normalized.isEmpty()) {
-            throw new ConversionException("Input text cannot be empty.");
+            throw new ConversionException("error.inputEmpty");
         }
 
         boolean negative = false;
@@ -44,7 +44,7 @@ public class EnglishNumberConverter {
             negative = true;
             normalized = normalized.substring((NEGATIVE + " ").length()).trim();
         } else if (normalized.equals(NEGATIVE)) {
-            throw new ConversionException("Invalid negative number expression.");
+            throw new ConversionException("error.invalidNegativeExpression");
         }
 
         if (ZERO.equals(normalized)) {
@@ -62,12 +62,12 @@ public class EnglishNumberConverter {
                 long scaleValue = getScaleValue(token);
 
                 if (scaleValue >= lastScale) {
-                    throw new ConversionException("Invalid scale order in English number expression: " + text);
+                    throw new ConversionException("error.invalidScaleOrderEn", text);
                 }
 
                 int chunkValue = parseChunk(currentChunkTokens);
                 if (chunkValue == 0) {
-                    throw new ConversionException("Invalid scale usage in English number expression: " + text);
+                    throw new ConversionException("error.invalidScaleUsageEn", text);
                 }
 
                 total += chunkValue * scaleValue;
@@ -157,7 +157,7 @@ public class EnglishNumberConverter {
             case THOUSAND -> 1_000L;
             case MILLION -> 1_000_000L;
             case BILLION -> 1_000_000_000L;
-            default -> throw new ConversionException("Unknown English scale token: " + token);
+            default -> throw new ConversionException("error.unknownEnglishScaleToken", token);
         };
     }
 
@@ -208,14 +208,14 @@ public class EnglishNumberConverter {
                         value += unitValue;
                         index++;
                     } else {
-                        throw new ConversionException("Invalid English number token: " + token);
+                        throw new ConversionException("error.invalidEnglishNumberToken", token);
                     }
                 }
             }
         }
 
         if (index != tokens.size()) {
-            throw new ConversionException("Invalid English chunk: " + String.join(" ", tokens));
+            throw new ConversionException("error.invalidEnglishChunk", String.join(" ", tokens));
         }
 
         return value;
@@ -293,7 +293,7 @@ public class EnglishNumberConverter {
 
     private void ensureIntRange(long value, String originalText) throws ConversionException {
         if (value < Integer.MIN_VALUE || value > Integer.MAX_VALUE) {
-            throw new ConversionException("Value is out of int range: " + originalText);
+            throw new ConversionException("error.valueOutOfRange", originalText);
         }
     }
 }

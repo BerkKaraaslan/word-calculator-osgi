@@ -12,25 +12,18 @@ public class Activator implements BundleActivator {
 
     @Override
     public void start(BundleContext context) {
-        System.out.println("number-converter-service started");
-
         NumberWordConverterService converterService = new NumberWordConverterServiceImpl();
         serviceRegistration = context.registerService(
                 NumberWordConverterService.class,
                 converterService,
                 null
         );
-
-        System.out.println("NumberWordConverterService registered");
     }
 
     @Override
     public void stop(BundleContext context) {
-        System.out.println("number-converter-service stopped");
-
         if (serviceRegistration != null) {
             serviceRegistration.unregister();
-            System.out.println("NumberWordConverterService unregistered");
         }
     }
 }
