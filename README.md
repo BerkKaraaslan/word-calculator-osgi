@@ -204,3 +204,32 @@ After the configuration is complete:
 3. Click **Run**
 
 The OSGi container will start and the Swing user interface will be launched automatically.
+
+# Known Issue on macOS (OSGi Launch)
+
+When the application is launched as an **OSGi Framework** from Eclipse on **macOS**, a window focus issue may occur. In this situation, the Swing window opens correctly but the input fields do not receive keyboard focus, which prevents entering text into the input fields.
+
+To demonstrate that the application itself works correctly and to allow functional testing of the UI and business logic, an additional standalone test entry point has been provided.
+
+For this purpose:
+
+A new package **com.wordcalc.test** has been added.
+
+The class **StandaloneTest.java** has been introduced as a standalone launcher.
+
+This class allows the application to be executed outside the OSGi runtime.
+
+The application can be tested by running:
+
+**Run As → Java Application** 
+
+on **StandaloneTest.java**.
+
+When executed this way, the application runs correctly and all input fields behave as expected.
+
+Additionally, for testing purposes, the package:
+
+**com.wordcalc.converter.impl**
+
+has been temporarily exported in the **MANIFEST.MF** file of the **number-converter-service** bundle.
+This export was added only to allow the standalone test class to directly instantiate the converter implementation outside the OSGi service registry.
